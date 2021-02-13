@@ -1,9 +1,7 @@
 package fr.doritanh.olurwa.Lobby;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -14,7 +12,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
+import fr.doritanh.olurwa.Lobby.PlayerManager;
+import fr.doritanh.olurwa.Lobby.Inventory.MenuInventory;
 import net.md_5.bungee.api.ChatColor;
 
 public class PlayerManager implements Listener {
@@ -28,7 +29,7 @@ public class PlayerManager implements Listener {
 		e.setJoinMessage(ChatColor.LIGHT_PURPLE + "Salut, " + ChatColor.GREEN + e.getPlayer().getName() + " !");
 		e.getPlayer().getInventory().clear();
 		
-		final ItemStack itemMenu = new ItemStack(Material.COMPASS, 1);
+		final ItemStack itemMenu = new ItemStack(Material.CLOCK, 1);
 		final ItemMeta meta = itemMenu.getItemMeta();
 		meta.setDisplayName("Lobby menu");
 		itemMenu.setItemMeta(meta);
@@ -43,7 +44,7 @@ public class PlayerManager implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if (e.getItem() != null && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("Lobby menu")) {
-				MenuGUI m = new MenuGUI();
+				MenuInventory m = new MenuInventory();
 				m.openInventory(e.getPlayer());
 			}
 		}
