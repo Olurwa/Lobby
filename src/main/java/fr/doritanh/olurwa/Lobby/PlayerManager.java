@@ -3,9 +3,11 @@ package fr.doritanh.olurwa.Lobby;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -62,6 +64,17 @@ public class PlayerManager implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerLooseFood(FoodLevelChangeEvent e) {
+		if (e.getEntityType() != EntityType.PLAYER) return;
+		e.setFoodLevel(20);
+		// e.setCancelled(true);
+	}
+	
+	/**
+	 * Disable player damage
+	 * @param e
+	 */
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent e) {
 		if (e.getEntityType() == EntityType.PLAYER) {
 			e.setCancelled(true);
 		}
