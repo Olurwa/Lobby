@@ -1,3 +1,4 @@
 name: Lobby
 version: 1.0
 main: fr.doritanh.olurwa.Lobby.Lobby
+api-version: 1.16
