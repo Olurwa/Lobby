@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -76,7 +77,7 @@ public class PlayerManager implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent e) {
-		if (e.getEntityType() == EntityType.PLAYER) {
+		if (e.getCause() == DamageCause.DROWNING || e.getCause() == DamageCause.FALL) {
 			e.setCancelled(true);
 		}
 	}
