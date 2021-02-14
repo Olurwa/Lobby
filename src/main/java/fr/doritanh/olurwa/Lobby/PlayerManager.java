@@ -11,6 +11,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -27,7 +28,7 @@ public class PlayerManager implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent e) {
-		e.setJoinMessage(ChatColor.LIGHT_PURPLE + "Salut, " + ChatColor.GREEN + e.getPlayer().getName() + " !");
+		e.setJoinMessage(null);
 		e.getPlayer().getInventory().clear();
 		
 		final ItemStack itemMenu = new ItemStack(Material.CLOCK, 1);
@@ -35,6 +36,15 @@ public class PlayerManager implements Listener {
 		meta.setDisplayName("Lobby menu");
 		itemMenu.setItemMeta(meta);
 		e.getPlayer().getInventory().addItem(itemMenu);
+	}
+	
+	/**
+	 * When player disconnect
+	 * @param e
+	 */
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent e) {
+		e.setQuitMessage(null);
 	}
 	
 	/**
