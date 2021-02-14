@@ -1,6 +1,5 @@
 package fr.doritanh.olurwa.Lobby;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.doritanh.olurwa.Lobby.Inventory.MenuInventory;

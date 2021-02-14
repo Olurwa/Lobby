@@ -26,7 +26,7 @@ public class MenuInventory implements Listener {
         this.i = Bukkit.createInventory(null, 9, this.name);        
 
         //this.i.addItem(this.createItemStack(Material.GRASS_BLOCK, "Survie"));
-        this.i.addItem(this.createItemStack(Material.ANVIL, "Créatif"));
+        this.i.addItem(this.createItemStack(Material.ANVIL, "Crï¿½atif"));
     }
     
     private ItemStack createItemStack(Material m, String name) {
@@ -58,7 +58,6 @@ public class MenuInventory implements Listener {
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
 
         final Player p = (Player) e.getWhoClicked();
-        // Utiliser e.getRawSlot() pour avoir le solt, départ à 0
         switch (e.getRawSlot()) {
         case 0:
         	try {
@@ -72,7 +71,7 @@ public class MenuInventory implements Listener {
         	}
         	break;
         default:
-            p.sendMessage("Désolé, cette fonctionnalité n'est pas disponible pour le moment. ");
+            p.sendMessage("Dï¿½solï¿½, cette fonctionnalitï¿½ n'est pas disponible pour le moment. ");
             break;
         }
     }
