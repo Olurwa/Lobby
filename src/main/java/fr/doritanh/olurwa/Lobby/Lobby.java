@@ -16,13 +16,6 @@ public class Lobby extends JavaPlugin {
 	
 	public Lobby() {
 		instance = this;
-		
-		for (World w : this.getServer().getWorlds()) {
-			if (w.getEnvironment() == Environment.NORMAL) {
-				this.spawn = w.getSpawnLocation();
-			}
-		}
-		this.spawn.add(0.5, 0, 0.5);
 	}
 	
     @Override
@@ -33,6 +26,14 @@ public class Lobby extends JavaPlugin {
     	
     	this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new MessageListener());
+        
+        // Set spawn
+		for (World w : this.getServer().getWorlds()) {
+			if (w.getEnvironment() == Environment.NORMAL) {
+				this.spawn = w.getSpawnLocation();
+			}
+		}
+		this.spawn.add(0.5, 0, 0.5);
     }
     
     @Override
