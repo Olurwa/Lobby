@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import fr.doritanh.olurwa.Lobby.Lobby;
 import fr.doritanh.olurwa.Lobby.inventory.MenuInventory;
 import fr.doritanh.olurwa.Lobby.listener.PlayerListener;
 import net.md_5.bungee.api.ChatColor;
@@ -42,6 +43,7 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent e) {
+		e.getPlayer().teleport(Lobby.get().getSpawn());
 		e.setJoinMessage(null);
 		e.getPlayer().getInventory().clear();
 		
@@ -110,9 +112,7 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
-		Location spawn = e.getPlayer().getWorld().getSpawnLocation();
-		spawn.add(0.5, 0, 0.5);
-		e.setRespawnLocation(spawn);
+		e.setRespawnLocation(Lobby.get().getSpawn());
 	}
 	
 	/**
