@@ -86,9 +86,9 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerLooseFood(FoodLevelChangeEvent e) {
-		if (e.getEntityType() != EntityType.PLAYER) return;
-		e.setFoodLevel(20);
-		// e.setCancelled(true);
+		if (e.getEntityType() == EntityType.PLAYER) {
+			e.setFoodLevel(20);
+		}
 	}
 	
 	/**
@@ -110,11 +110,8 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
-		World world = e.getPlayer().getWorld();
-		Location spawn = new Location(world, 
-				world.getSpawnLocation().getBlockX(), 
-				world.getSpawnLocation().getBlockY(), 
-				world.getSpawnLocation().getBlockZ());
+		Location spawn = e.getPlayer().getWorld().getSpawnLocation();
+		spawn.add(0.5, 0, 0.5);
 		e.setRespawnLocation(spawn);
 	}
 	
