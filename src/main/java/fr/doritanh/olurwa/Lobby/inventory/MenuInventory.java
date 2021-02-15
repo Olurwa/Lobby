@@ -1,4 +1,4 @@
-package fr.doritanh.olurwa.Lobby.Inventory;
+package fr.doritanh.olurwa.Lobby.inventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,7 +26,7 @@ public class MenuInventory implements Listener {
         this.i = Bukkit.createInventory(null, 9, this.name);        
 
         //this.i.addItem(this.createItemStack(Material.GRASS_BLOCK, "Survie"));
-        this.i.addItem(this.createItemStack(Material.ANVIL, "Cr�atif"));
+        this.i.addItem(this.createItemStack(Material.ANVIL, "Créatif"));
     }
     
     private ItemStack createItemStack(Material m, String name) {
