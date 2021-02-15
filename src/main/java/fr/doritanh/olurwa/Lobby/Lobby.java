@@ -2,6 +2,7 @@ package fr.doritanh.olurwa.Lobby;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.doritanh.olurwa.Lobby.inventory.MenuInventory;
@@ -16,8 +17,11 @@ public class Lobby extends JavaPlugin {
 	public Lobby() {
 		instance = this;
 		
-		World wspawn = this.getServer().getWorld("world");
-		this.spawn = wspawn.getSpawnLocation();
+		for (World w : this.getServer().getWorlds()) {
+			if (w.getEnvironment() == Environment.NORMAL) {
+				this.spawn = w.getSpawnLocation();
+			}
+		}
 		this.spawn.add(0.5, 0, 0.5);
 	}
 	
