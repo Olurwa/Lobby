@@ -1,6 +1,8 @@
 package fr.doritanh.olurwa.Lobby.listener;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -107,8 +110,12 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
-		e.setRespawnLocation(e.getPlayer().getWorld().getSpawnLocation());
-		this.sendMenu(e.getPlayer());
+		World world = e.getPlayer().getWorld();
+		Location spawn = new Location(world, 
+				world.getSpawnLocation().getBlockX(), 
+				world.getSpawnLocation().getBlockY(), 
+				world.getSpawnLocation().getBlockZ());
+		e.setRespawnLocation(spawn);
 	}
 	
 	/**
@@ -116,10 +123,7 @@ public class PlayerListener implements Listener {
 	 * @param e
 	 */
 	@EventHandler
-	public void onPlayerDie(EntityDeathEvent e) {
-		if (e.getEntityType() == EntityType.PLAYER) {
-			Player p = (Player) e.getEntity();
-			p.getInventory().clear();
-		}
+	public void onPlayerDie(PlayerDeathEvent e) {
+		e.setKeepInventory(true);
 	}
 }
