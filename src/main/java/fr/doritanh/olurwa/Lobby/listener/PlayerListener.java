@@ -16,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -122,5 +123,16 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerDie(PlayerDeathEvent e) {
 		e.setKeepInventory(true);
+	}
+	
+	/**
+	 * TP player when falling in the void
+	 * @param e
+	 */
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e) {
+		if (e.getPlayer().getLocation().getY() <= 1) {
+			e.getPlayer().teleport(Lobby.get().getSpawn());
+		}
 	}
 }
