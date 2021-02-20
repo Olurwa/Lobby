@@ -1,4 +1,4 @@
-package fr.doritanh.olurwa.Lobby.listener;
+package fr.doritanh.olurwa.lobby.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;

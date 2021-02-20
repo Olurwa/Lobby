@@ -1,4 +1,4 @@
-package fr.doritanh.olurwa.Lobby.listener;
+package fr.doritanh.olurwa.lobby.listener;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,9 +23,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import fr.doritanh.olurwa.Lobby.Lobby;
-import fr.doritanh.olurwa.Lobby.inventory.MenuInventory;
-import fr.doritanh.olurwa.Lobby.listener.PlayerListener;
+import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
+import fr.doritanh.olurwa.lobby.listener.PlayerListener;
+import fr.doritanh.olurwa.lobby.Lobby;
 import net.md_5.bungee.api.ChatColor;
 
 public class PlayerListener implements Listener {

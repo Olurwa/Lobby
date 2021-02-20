@@ -1,13 +1,13 @@
-package fr.doritanh.olurwa.Lobby;
+package fr.doritanh.olurwa.lobby;
 
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.doritanh.olurwa.Lobby.inventory.MenuInventory;
-import fr.doritanh.olurwa.Lobby.listener.MessageListener;
-import fr.doritanh.olurwa.Lobby.listener.PlayerListener;
+import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
+import fr.doritanh.olurwa.lobby.listener.MessageListener;
+import fr.doritanh.olurwa.lobby.listener.PlayerListener;
 
 public class Lobby extends JavaPlugin {
 	private Location spawn;

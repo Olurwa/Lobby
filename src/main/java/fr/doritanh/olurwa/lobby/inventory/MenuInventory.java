@@ -1,4 +1,4 @@
-package fr.doritanh.olurwa.Lobby.inventory;
+package fr.doritanh.olurwa.lobby.inventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import fr.doritanh.olurwa.Lobby.Lobby;
+import fr.doritanh.olurwa.lobby.Lobby;
 
 public class MenuInventory implements Listener {
 	private String name;
