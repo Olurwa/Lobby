@@ -1,8 +1,7 @@
 package fr.doritanh.olurwa.lobby.listener;
 
-import org.bukkit.Location;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -21,12 +19,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
 import fr.doritanh.olurwa.lobby.listener.PlayerListener;
 import fr.doritanh.olurwa.lobby.Lobby;
-import net.md_5.bungee.api.ChatColor;
 
 public class PlayerListener implements Listener {
 	
@@ -47,6 +43,12 @@ public class PlayerListener implements Listener {
 		e.getPlayer().teleport(Lobby.get().getSpawn());
 		e.setJoinMessage(null);
 		e.getPlayer().getInventory().clear();
+
+		Lobby.get().getTabList().sendHeaderFooter(e.getPlayer());
+		
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			Lobby.get().getTabList().update(p);
+		}
 		
 		this.sendMenu(e.getPlayer());
 	}
@@ -58,6 +60,10 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
+
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			Lobby.get().getTabList().update(p);
+		}
 	}
 	
 	/**
