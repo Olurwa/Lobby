@@ -10,6 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import com.google.common.collect.Iterables;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
@@ -49,7 +52,10 @@ public class TabList {
 	private final Team tSurvivalPlayers;
 	private final Team tOthersTitle;
 	private final Team tOthersPlayers;
-	private final Team tOthers;
+	private final Team tRemoveLobby;
+	private final Team tRemoveCreative;
+	private final Team tRemoveSurvival;
+	private final Team tRemoveOthers;
 
 	public TabList() {
 		this.server = ((CraftServer) Bukkit.getServer()).getServer();
@@ -68,7 +74,10 @@ public class TabList {
 		tSurvivalPlayers = sTab.registerNewTeam("f_tab");
 		tOthersTitle = sTab.registerNewTeam("g_tab");
 		tOthersPlayers = sTab.registerNewTeam("h_tab");
-		tOthers = sTab.registerNewTeam("z_tab");
+		tRemoveLobby = sTab.registerNewTeam("w_tab");
+		tRemoveCreative = sTab.registerNewTeam("x_tab");
+		tRemoveSurvival = sTab.registerNewTeam("y_tab");
+		tRemoveOthers = sTab.registerNewTeam("z_tab");
 
 		this.baseTexture = "ewogICJ0aW1lc3RhbXAiIDogMTYxMzk0NTE0NTgyNCwKICAicH"
 				+ "JvZmlsZUlkIiA6ICJmYzUwMjkzYTVkMGI0NzViYWYwNDJhNzIwMWJhMzBkM"
@@ -133,26 +142,11 @@ public class TabList {
 	}
 
 	private void reset() {
-		for (String entry : tLobbyPlayers.getEntries()) {
-			tLobbyPlayers.removeEntry(entry);
-		}
-		for (String entry : tCreativePlayers.getEntries()) {
-			tCreativePlayers.removeEntry(entry);
-		}
 		for (String entry : tSurvivalPlayers.getEntries()) {
 			tSurvivalPlayers.removeEntry(entry);
 		}
 		for (String entry : tOthersPlayers.getEntries()) {
 			tOthersPlayers.removeEntry(entry);
-		}
-		for (String entry : tOthers.getEntries()) {
-			tOthers.removeEntry(entry);
-		}
-		for (int i = 2; i < 20; i++) {
-			tLobbyPlayers.addEntry(this.players[i].getName());
-		}
-		for (int i = 22; i < 40; i++) {
-			tCreativePlayers.addEntry(this.players[i].getName());
 		}
 		for (int i = 42; i < 60; i++) {
 			tSurvivalPlayers.addEntry(this.players[i].getName());
@@ -181,20 +175,103 @@ public class TabList {
 		}
 	}
 
-	public void update() {
-		this.reset();
+	private void resetLobby() {
+		// Remove players in lobby and players in tOthers
+		for (String entry : tLobbyPlayers.getEntries()) {
+			tLobbyPlayers.removeEntry(entry);
+		}
+		for (String entry : tRemoveLobby.getEntries()) {
+			tRemoveLobby.removeEntry(entry);
+		}
+		// Add false players to lobby
+		for (int i = 2; i < 20; i++) {
+			tLobbyPlayers.addEntry(this.players[i].getName());
+		}
+	}
+
+	public void updateLobby() {
+		this.resetLobby();
 
 		int count = 2;
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (count < 20) {
 				tLobbyPlayers.removeEntry(this.players[count].getName());
-				tOthers.addEntry(this.players[count].getName());
+				tRemoveLobby.addEntry(this.players[count].getName());
 				tLobbyPlayers.addEntry(p.getName());
 			} else {
-				tOthers.addEntry(p.getName());
+				tRemoveLobby.addEntry(p.getName());
 			}
 			count++;
 		}
+	}
+
+	public void updateLobby(Player playerQuitting) {
+		this.resetLobby();
+
+		int count = 2;
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if (p.getName() == playerQuitting.getName())
+				continue;
+			if (count < 20) {
+				tLobbyPlayers.removeEntry(this.players[count].getName());
+				tRemoveLobby.addEntry(this.players[count].getName());
+				tLobbyPlayers.addEntry(p.getName());
+			} else {
+				tRemoveLobby.addEntry(p.getName());
+			}
+			count++;
+		}
+	}
+
+	/**
+	 * Update the current tablist with players on creative
+	 * 
+	 * @param playersNames - Names of players
+	 */
+	public void updateCreative(String[] playersNames) {
+		// Clean creative teams
+		for (String entry : tCreativePlayers.getEntries()) {
+			tCreativePlayers.removeEntry(entry);
+		}
+		for (String entry : tRemoveLobby.getEntries()) {
+			tRemoveLobby.removeEntry(entry);
+		}
+		// Add false players to creative team
+		for (int i = 22; i < 40; i++) {
+			tCreativePlayers.addEntry(this.players[i].getName());
+		}
+
+		int count = 22;
+		for (String name : playersNames) {
+			if (count < 40) {
+				@SuppressWarnings("deprecation")
+				UUID uuid = Bukkit.getOfflinePlayer(name).getUniqueId();
+				GameProfile profile = new GameProfile(uuid, name);
+				profile.getProperties().put("textures", new Property("textures", this.baseTexture, this.baseSignature));
+				EntityPlayer p = new EntityPlayer(server, worldserver, profile, playerinteractmanager);
+				p.listName = new ChatComponentText(name);
+
+				tCreativePlayers.removeEntry(this.players[count].getName());
+				tRemoveCreative.addEntry(this.players[count].getName());
+				tCreativePlayers.addEntry(p.getName());
+			}
+			count++;
+		}
+	}
+
+	public void requestUpdateServers() {
+		Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+
+		// Creative
+		ByteArrayDataOutput creative = ByteStreams.newDataOutput();
+		creative.writeUTF("PlayerList");
+		creative.writeUTF("creative");
+		player.sendPluginMessage(Lobby.get(), "BungeeCord", creative.toByteArray());
+		// Survival
+		ByteArrayDataOutput survival = ByteStreams.newDataOutput();
+		survival.writeUTF("PlayerList");
+		survival.writeUTF("survival");
+		player.sendPluginMessage(Lobby.get(), "BungeeCord", survival.toByteArray());
 	}
 
 	public void send(Player packetReceiver) {

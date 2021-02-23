@@ -45,7 +45,7 @@ public class PlayerListener implements Listener {
 		e.getPlayer().getInventory().clear();
 
 		Lobby.get().getTabList().sendHeaderFooter(e.getPlayer());
-		Lobby.get().getTabList().update();
+		Lobby.get().getTabList().updateLobby();
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			Lobby.get().getTabList().send(p);
@@ -62,7 +62,7 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
-		Lobby.get().getTabList().update();
+		Lobby.get().getTabList().updateLobby(e.getPlayer());
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			Lobby.get().getTabList().send(p);
