@@ -20,12 +20,11 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
-import fr.doritanh.olurwa.lobby.listener.PlayerListener;
 import fr.doritanh.olurwa.lobby.Lobby;
+import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
 
 public class PlayerListener implements Listener {
-	
+
 	private void sendMenu(Player p) {
 		final ItemStack itemMenu = new ItemStack(Material.CLOCK, 1);
 		final ItemMeta meta = itemMenu.getItemMeta();
@@ -33,9 +32,10 @@ public class PlayerListener implements Listener {
 		itemMenu.setItemMeta(meta);
 		p.getInventory().addItem(itemMenu);
 	}
-	
+
 	/**
 	 * When player login
+	 * 
 	 * @param e
 	 */
 	@EventHandler
@@ -45,29 +45,33 @@ public class PlayerListener implements Listener {
 		e.getPlayer().getInventory().clear();
 
 		Lobby.get().getTabList().sendHeaderFooter(e.getPlayer());
-		
+		Lobby.get().getTabList().update();
+
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			Lobby.get().getTabList().update(p);
+			Lobby.get().getTabList().send(p);
 		}
-		
+
 		this.sendMenu(e.getPlayer());
 	}
-	
+
 	/**
 	 * When player disconnect
+	 * 
 	 * @param e
 	 */
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
+		Lobby.get().getTabList().update();
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			Lobby.get().getTabList().update(p);
+			Lobby.get().getTabList().send(p);
 		}
 	}
-	
+
 	/**
 	 * When player interact
+	 * 
 	 * @param e
 	 */
 	@EventHandler
@@ -79,18 +83,20 @@ public class PlayerListener implements Listener {
 			}
 		}
 	}
-	
+
 	/**
 	 * Disable player drop
+	 * 
 	 * @param e
 	 */
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent e) {
 		e.setCancelled(true);
 	}
-	
+
 	/**
 	 * Disable player food
+	 * 
 	 * @param e
 	 */
 	@EventHandler
@@ -99,40 +105,43 @@ public class PlayerListener implements Listener {
 			e.setFoodLevel(20);
 		}
 	}
-	
+
 	/**
 	 * Disable player damage
+	 * 
 	 * @param e
 	 */
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent e) {
-		if (e.getCause() == DamageCause.DROWNING 
-				|| e.getCause() == DamageCause.FALL
+		if (e.getCause() == DamageCause.DROWNING || e.getCause() == DamageCause.FALL
 				|| e.getCause() == DamageCause.FIRE) {
 			e.setCancelled(true);
 		}
 	}
-	
+
 	/**
 	 * Player respawn
+	 * 
 	 * @param e
 	 */
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
 		e.setRespawnLocation(Lobby.get().getSpawn());
 	}
-	
+
 	/**
 	 * Delete menu when player die
+	 * 
 	 * @param e
 	 */
 	@EventHandler
 	public void onPlayerDie(PlayerDeathEvent e) {
 		e.setKeepInventory(true);
 	}
-	
+
 	/**
 	 * TP player when falling in the void
+	 * 
 	 * @param e
 	 */
 	@EventHandler
