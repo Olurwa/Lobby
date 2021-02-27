@@ -170,8 +170,15 @@ public class PlayerListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	/**
+	 * Change the command suggestion list
+	 * 
+	 * @param e
+	 */
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerCommandPreprocess(PlayerCommandSendEvent e) {
+		e.getPlayer().sendMessage("Hello ");
 		e.getCommands().clear();
+		e.getCommands().add("help");
 	}
 }
