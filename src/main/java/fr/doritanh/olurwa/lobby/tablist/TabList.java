@@ -112,6 +112,8 @@ public class TabList {
 			this.players[i] = new EntityPlayer(server, worldserver, profile, playerinteractmanager);
 			this.players[i].listName = new ChatComponentText("");
 			this.players[i].ping = 1000;
+
+			this.server.getPlayerList().players.remove(this.players[i]);
 		}
 
 		this.players[0].listName = new ChatComponentText("§lLobby");
