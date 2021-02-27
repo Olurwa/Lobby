@@ -18,6 +18,7 @@ public class MessageListener implements PluginMessageListener {
 		}
 		ByteArrayDataInput in = ByteStreams.newDataInput(message);
 		String subchannel = in.readUTF();
+		System.out.println("Passage message recu");
 		if (subchannel.equals("PlayerList")) {
 			System.out.println("COMING PLAYERLIST");
 			String server = in.readUTF();
