@@ -249,7 +249,6 @@ public class TabList {
 		for (String name : playersNames) {
 			if (name.equalsIgnoreCase(""))
 				continue;
-			System.out.println("Passage avec " + name);
 			if (count < 40) {
 //				@SuppressWarnings("deprecation")
 //				UUID uuid = Bukkit.getOfflinePlayer(name).getUniqueId();

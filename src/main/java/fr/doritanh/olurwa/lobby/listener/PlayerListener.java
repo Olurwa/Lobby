@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.doritanh.olurwa.lobby.Lobby;
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
@@ -51,7 +52,13 @@ public class PlayerListener implements Listener {
 			Lobby.get().getTabList().send(p);
 		}
 
-		Lobby.get().getTabList().requestUpdateServers();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Lobby.get().getTabList().requestUpdateServers();
+
+			}
+		}.runTaskLater(Lobby.get(), 20);
 
 		this.sendMenu(e.getPlayer());
 	}
