@@ -279,10 +279,6 @@ public class TabList {
 		pc.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, this.players));
 		packetReceiver.setScoreboard(sTab);
 		pc.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, this.players));
-
-		for (EntityPlayer p : this.players) {
-			this.server.getPlayerList().players.remove(p);
-		}
 	}
 
 }

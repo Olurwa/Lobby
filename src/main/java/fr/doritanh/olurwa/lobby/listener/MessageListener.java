@@ -21,7 +21,7 @@ public class MessageListener implements PluginMessageListener {
 		if (subchannel.equals("PlayerList")) {
 			String server = in.readUTF();
 			String[] playerList = in.readUTF().split(", ");
-			System.out.println("PlayerList: " + playerList.toString());
+			System.out.println("Server: " + server + " PlayerList: " + playerList.toString());
 			if (server == "creative") {
 				Lobby.get().getTabList().updateCreative(playerList);
 			}
