@@ -261,7 +261,7 @@ public class TabList {
 
 	public void requestUpdateServers() {
 		Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
-		System.out.println("Passage requestUpdateServers");
+
 		// Creative
 		ByteArrayDataOutput creative = ByteStreams.newDataOutput();
 		creative.writeUTF("PlayerList");

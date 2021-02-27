@@ -69,6 +69,8 @@ public class PlayerListener implements Listener {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			Lobby.get().getTabList().send(p);
 		}
+
+		Lobby.get().getTabList().requestUpdateServers();
 	}
 
 	/**
