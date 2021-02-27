@@ -31,6 +31,7 @@ import net.minecraft.server.v1_16_R3.WorldServer;
 
 public class TabList {
 	private final int MAX_SIZE = 80;
+	private final int MAX_PLAYERS_COLUMN = 18;
 
 	private final MinecraftServer server;
 	private final WorldServer worldserver;
@@ -230,15 +231,18 @@ public class TabList {
 	 */
 	public void updateCreative(String[] playersNames) {
 		// Clean creative teams
-		for (String entry : tCreativePlayers.getEntries()) {
-			tCreativePlayers.removeEntry(entry);
-		}
-		for (String entry : tRemoveCreative.getEntries()) {
-			tRemoveCreative.removeEntry(entry);
-		}
-		// Add false players to creative team
+//		for (String entry : tCreativePlayers.getEntries()) {
+//			tCreativePlayers.removeEntry(entry);
+//		}
+//		for (String entry : tRemoveCreative.getEntries()) {
+//			tRemoveCreative.removeEntry(entry);
+//		}
+//		// Add false players to creative team
+//		for (int i = 22; i < 40; i++) {
+//			tCreativePlayers.addEntry(this.players[i].getName());
+//		}
 		for (int i = 22; i < 40; i++) {
-			tCreativePlayers.addEntry(this.players[i].getName());
+			this.players[i].listName = new ChatComponentText("");
 		}
 
 		int count = 22;
@@ -247,16 +251,16 @@ public class TabList {
 				continue;
 			System.out.println("Passage avec " + name);
 			if (count < 40) {
-				@SuppressWarnings("deprecation")
-				UUID uuid = Bukkit.getOfflinePlayer(name).getUniqueId();
-				GameProfile profile = new GameProfile(uuid, name);
-				profile.getProperties().put("textures", new Property("textures", this.baseTexture, this.baseSignature));
-				EntityPlayer p = new EntityPlayer(server, worldserver, profile, playerinteractmanager);
-				p.listName = new ChatComponentText(name);
+//				@SuppressWarnings("deprecation")
+//				UUID uuid = Bukkit.getOfflinePlayer(name).getUniqueId();
+//				GameProfile profile = new GameProfile(uuid, name);
+//				profile.getProperties().put("textures", new Property("textures", this.baseTexture, this.baseSignature));
+//				EntityPlayer p = new EntityPlayer(server, worldserver, profile, playerinteractmanager);
+				this.players[count].listName = new ChatComponentText(name);
 
-				tCreativePlayers.removeEntry(this.players[count].getName());
-				tRemoveCreative.addEntry(this.players[count].getName());
-				tCreativePlayers.addEntry(p.getName());
+//				tCreativePlayers.removeEntry(this.players[count].getName());
+//				tRemoveCreative.addEntry(this.players[count].getName());
+//				tCreativePlayers.addEntry(name);
 			}
 			count++;
 		}
