@@ -233,16 +233,19 @@ public class TabList {
 		for (String entry : tCreativePlayers.getEntries()) {
 			tCreativePlayers.removeEntry(entry);
 		}
-		for (String entry : tRemoveLobby.getEntries()) {
-			tRemoveLobby.removeEntry(entry);
+		for (String entry : tRemoveCreative.getEntries()) {
+			tRemoveCreative.removeEntry(entry);
 		}
 		// Add false players to creative team
 		for (int i = 22; i < 40; i++) {
 			tCreativePlayers.addEntry(this.players[i].getName());
 		}
 
+		System.out.println("Passage ici");
+
 		int count = 22;
 		for (String name : playersNames) {
+			System.out.println("Joueur present crea : " + name);
 			if (count < 40) {
 				@SuppressWarnings("deprecation")
 				UUID uuid = Bukkit.getOfflinePlayer(name).getUniqueId();
