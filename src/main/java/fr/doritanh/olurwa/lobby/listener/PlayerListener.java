@@ -175,7 +175,7 @@ public class PlayerListener implements Listener {
 	 * 
 	 * @param e
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(PlayerCommandSendEvent e) {
 		e.getPlayer().sendMessage("Hello ");
 		e.getCommands().clear();
