@@ -268,6 +268,8 @@ public class TabList {
 
 	public void requestUpdateServers() {
 		Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+		if (player == null)
+			return;
 
 		// Creative
 		ByteArrayDataOutput creative = ByteStreams.newDataOutput();
