@@ -2,3 +2,9 @@ name: Lobby
 version: 1.0
 main: fr.doritanh.olurwa.lobby.Lobby
 api-version: 1.16
+
+commands:
+   help:
+      description: Affiche de l'aide
+      usage: /<command>
+      permission: lobby.command.help
