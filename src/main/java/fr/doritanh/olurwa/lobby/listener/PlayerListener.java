@@ -179,7 +179,6 @@ public class PlayerListener implements Listener {
 	public void onPlayerCommandPreprocess(PlayerCommandSendEvent e) {
 		e.getCommands().clear();
 		e.getCommands().add("help");
-		e.getCommands().add("lobby");
 		e.getCommands().add("msg");
 	}
 }
