@@ -77,7 +77,13 @@ public class PlayerListener implements Listener {
 			Lobby.get().getTabList().send(p);
 		}
 
-		Lobby.get().getTabList().requestUpdateServers();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Lobby.get().getTabList().requestUpdateServers();
+
+			}
+		}.runTaskLater(Lobby.get(), 20);
 	}
 
 	/**
