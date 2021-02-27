@@ -30,7 +30,6 @@ public class Lobby extends JavaPlugin {
 		// Register commands
 		this.helpCommand = new HelpCommand();
 		this.getCommand("help").setExecutor(this.helpCommand);
-		this.getCommand("aide").setExecutor(this.helpCommand);
 
 		// Register events
 		this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
