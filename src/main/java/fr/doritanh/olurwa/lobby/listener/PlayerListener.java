@@ -51,6 +51,8 @@ public class PlayerListener implements Listener {
 			Lobby.get().getTabList().send(p);
 		}
 
+		Lobby.get().getTabList().requestUpdateServers();
+
 		this.sendMenu(e.getPlayer());
 	}
 
