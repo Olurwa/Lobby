@@ -241,11 +241,12 @@ public class TabList {
 			tCreativePlayers.addEntry(this.players[i].getName());
 		}
 
-		System.out.println("Passage ici");
+		for (String name : playersNames) {
+			System.out.println("Name : " + name);
+		}
 
 		int count = 22;
 		for (String name : playersNames) {
-			System.out.println("Joueur present crea : " + name);
 			if (count < 40) {
 				@SuppressWarnings("deprecation")
 				UUID uuid = Bukkit.getOfflinePlayer(name).getUniqueId();

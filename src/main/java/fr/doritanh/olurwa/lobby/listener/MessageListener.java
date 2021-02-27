@@ -21,9 +21,7 @@ public class MessageListener implements PluginMessageListener {
 		if (subchannel.equals("PlayerList")) {
 			String server = in.readUTF();
 			String[] playerList = in.readUTF().split(", ");
-			System.out.println("Servername " + server);
 			if (server.equalsIgnoreCase("creative")) {
-				System.out.println("Passage ici 1");
 				Lobby.get().getTabList().updateCreative(playerList);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
