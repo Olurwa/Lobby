@@ -112,8 +112,6 @@ public class TabList {
 			this.players[i] = new EntityPlayer(server, worldserver, profile, playerinteractmanager);
 			this.players[i].listName = new ChatComponentText("");
 			this.players[i].ping = 1000;
-
-			this.server.getPlayerList().players.remove(this.players[i]);
 		}
 
 		this.players[0].listName = new ChatComponentText("§lLobby");
@@ -281,6 +279,10 @@ public class TabList {
 		pc.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, this.players));
 		packetReceiver.setScoreboard(sTab);
 		pc.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, this.players));
+
+		for (EntityPlayer p : this.players) {
+			this.server.getPlayerList().players.remove(p);
+		}
 	}
 
 }
