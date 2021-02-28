@@ -177,6 +177,8 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(PlayerCommandSendEvent e) {
+		if (e.getPlayer().hasPermission("lobby.commands.bypass"))
+			return;
 		e.getCommands().clear();
 		e.getCommands().add("help");
 		e.getCommands().add("msg");

@@ -8,3 +8,17 @@ commands:
       description: Affiche de l'aide
       usage: /<command>
       permission: lobby.command.help
+        
+permissions:
+   lobby.command.help:
+      description: Authorise le /help
+      default: op
+   lobby.commands.bypass:
+      description: Affiche toutes les suggestions
+      default: op
+   lobby.*:
+      description: Tout le plugin lobby
+      default: op
+      children:
+         lobby.command.help: true
+         lobby.commands.bypass: true
