@@ -25,8 +25,8 @@ public class TabList {
 
 	public TabList() {
 
-		this.header = "§bOlurwa §7- §cLobby \\n ";
-		this.footer = " \\n ";
+		this.header = "§bOlurwa\\n ";
+		this.footer = " \\n§cLobby";
 
 		this.sTab = new ScoreboardTab();
 	}
