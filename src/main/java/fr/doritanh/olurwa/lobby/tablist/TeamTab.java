@@ -56,6 +56,7 @@ public class TeamTab {
 	}
 
 	public void add(EntityPlayerTab ept) {
+		this.players.add(ept);
 		this.tPlayers.addEntry(ept.getPlayer().getName());
 	}
 
