@@ -25,8 +25,14 @@ public class TeamTab {
 		this.tPlayers = sb.registerNewTeam(pos + "1_tab");
 
 		this.titlePlayers = new ArrayList<EntityPlayerTab>();
-		this.titlePlayers.add(new EntityPlayerTab(" " + pos + "0_tab", name));
-		this.titlePlayers.add(new EntityPlayerTab(" " + pos + "1_tab", ""));
+		if (index == 0) {
+			this.titlePlayers.add(new EntityPlayerTab(" " + pos + "0_tab", name));
+			this.titlePlayers.add(new EntityPlayerTab(" " + pos + "1_tab", ""));
+		} else {
+			this.titlePlayers.add(new EntityPlayerTab(" " + pos + "0_tab", ""));
+			this.titlePlayers.add(new EntityPlayerTab(" " + pos + "1_tab", name));
+			this.titlePlayers.add(new EntityPlayerTab(" " + pos + "2_tab", ""));
+		}
 
 		this.tTitle.addEntry(this.titlePlayers.get(0).getPlayer().getName());
 		this.tTitle.addEntry(this.titlePlayers.get(1).getPlayer().getName());

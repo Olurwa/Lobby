@@ -86,6 +86,8 @@ public class ScoreboardTab {
 	}
 
 	public void updateLobby() {
+		this.lobby.clear();
+
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			this.lobby.add(new EntityPlayerTab(p));
 		}
