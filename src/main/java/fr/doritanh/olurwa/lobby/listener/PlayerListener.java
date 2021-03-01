@@ -73,7 +73,13 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
-		Lobby.get().getTabList().updateLobby(e.getPlayer());
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Lobby.get().getTabList().updateLobby();
+
+			}
+		}.runTaskLater(Lobby.get(), 20);
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			Lobby.get().getTabList().send(p);
