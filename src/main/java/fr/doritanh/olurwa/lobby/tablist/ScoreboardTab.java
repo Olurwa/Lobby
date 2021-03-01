@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import net.minecraft.server.v1_16_R3.EntityPlayer;
 
@@ -27,26 +26,6 @@ public class ScoreboardTab {
 
 	public Scoreboard getScoreboard() {
 		return this.sb;
-	}
-
-	public TeamTab getLobby() {
-		return lobby;
-	}
-
-	public TeamTab getCreative() {
-		return creative;
-	}
-
-	public TeamTab getSurvival() {
-		return survival;
-	}
-
-	public TeamTab getOthers() {
-		return others;
-	}
-
-	public Team registerNewTeam(String name) {
-		return this.sb.registerNewTeam(name);
 	}
 
 	public ArrayList<EntityPlayerTab> getPlayers() {

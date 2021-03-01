@@ -9,7 +9,6 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
 import fr.doritanh.olurwa.lobby.Lobby;
-import net.minecraft.server.v1_16_R3.EntityPlayer;
 import net.minecraft.server.v1_16_R3.IChatBaseComponent;
 import net.minecraft.server.v1_16_R3.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_16_R3.PacketPlayOutPlayerInfo;
@@ -22,13 +21,12 @@ public class TabList {
 	private final String header;
 	private final String footer;
 
-	private EntityPlayer[] players;
 	private final ScoreboardTab sTab;
 
 	public TabList() {
 
-		this.header = "§bBienvenue sur §cOlurwa §b! \\n ";
-		this.footer = "";// "§7Vous êtes sur le lobby.";
+		this.header = "§bOlurwa §7- §cLobby \\n ";
+		this.footer = " \\n ";
 
 		this.sTab = new ScoreboardTab();
 	}
@@ -52,6 +50,9 @@ public class TabList {
 		}
 	}
 
+	/**
+	 * Ask bungeecord to send a player list for each servers
+	 */
 	public void requestUpdateServers() {
 		Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
 		if (player == null)
@@ -69,14 +70,27 @@ public class TabList {
 		player.sendPluginMessage(Lobby.get(), "BungeeCord", survival.toByteArray());
 	}
 
+	/**
+	 * Update the lobby player list
+	 */
 	public void updateLobby() {
 		this.sTab.updateLobby();
 	}
 
+	/**
+	 * Update the creative player list
+	 * 
+	 * @param playersNames
+	 */
 	public void updateCreative(String[] playersNames) {
 		this.sTab.updateCreative(playersNames);
 	}
 
+	/**
+	 * Send the player list
+	 * 
+	 * @param packetReceiver - The player who will receive the packet
+	 */
 	public void send(Player packetReceiver) {
 		PlayerConnection pc = ((CraftPlayer) packetReceiver).getHandle().playerConnection;
 		// Remove old players
