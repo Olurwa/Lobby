@@ -80,7 +80,7 @@ public class TabList {
 	public void send(Player packetReceiver) {
 		PlayerConnection pc = ((CraftPlayer) packetReceiver).getHandle().playerConnection;
 		// Remove old players
-		pc.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, this.sTab.getEntityRemoved()));
+//		pc.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, this.sTab.getEntityRemoved()));
 		// Set scoreboard to the packetreceiver
 		packetReceiver.setScoreboard(this.sTab.getScoreboard());
 		// Get all players and send them

@@ -95,7 +95,6 @@ public class ScoreboardTab {
 		this.creative.clear();
 
 		for (String name : playersNames) {
-			System.out.println("Name :" + name);
 			if (name.equalsIgnoreCase(""))
 				continue;
 			this.creative.add(new EntityPlayerTab(name, name));
