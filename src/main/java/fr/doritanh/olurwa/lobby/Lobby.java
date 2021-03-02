@@ -8,7 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.doritanh.olurwa.lobby.commands.HelpCommand;
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
-import fr.doritanh.olurwa.lobby.listener.MessageListener;
+import fr.doritanh.olurwa.lobby.listener.BungeeMessageListener;
+import fr.doritanh.olurwa.lobby.listener.CoreMessageListener;
 import fr.doritanh.olurwa.lobby.listener.PlayerListener;
 import fr.doritanh.olurwa.lobby.tablist.TabList;
 
@@ -37,7 +38,9 @@ public class Lobby extends JavaPlugin {
 
 		// Register channels
 		this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new MessageListener());
+		this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeMessageListener());
+		this.getServer().getMessenger().registerOutgoingPluginChannel(this, "olurwa:core");
+		this.getServer().getMessenger().registerIncomingPluginChannel(this, "olurwa:core", new CoreMessageListener());
 
 		// Set spawn
 		for (World w : this.getServer().getWorlds()) {
