@@ -22,8 +22,9 @@ public class CoreMessageListener implements PluginMessageListener {
 		System.out.println("Subchannel : " + subchannel);
 		if (subchannel.equals("PlayerList")) {
 			String server = in.readUTF();
-			System.out.println("Server : " + server);
-			String[] playerList = in.readUTF().split(", ");
+			String players = in.readUTF();
+			System.out.println("Server : " + server + " Players : " + players);
+			String[] playerList = players.split(", ");
 			if (server.equalsIgnoreCase("creative")) {
 				Lobby.get().getTabList().updateCreative(playerList);
 			}
