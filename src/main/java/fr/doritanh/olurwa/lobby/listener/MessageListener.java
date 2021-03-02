@@ -13,19 +13,20 @@ public class MessageListener implements PluginMessageListener {
 
 	@Override
 	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-		if (!channel.equals("BungeeCord") || !channel.equals("olurwa:core")) {
-			return;
-		}
-		ByteArrayDataInput in = ByteStreams.newDataInput(message);
-		String subchannel = in.readUTF();
-		if (subchannel.equals("PlayerList")) {
-			String server = in.readUTF();
-			String[] playerList = in.readUTF().split(", ");
-			if (server.equalsIgnoreCase("creative")) {
-				Lobby.get().getTabList().updateCreative(playerList);
-			}
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				Lobby.get().getTabList().send(p);
+		if (channel.equals("BungeeCord") || channel.equals("olurwa:core")) {
+			ByteArrayDataInput in = ByteStreams.newDataInput(message);
+			String subchannel = in.readUTF();
+			System.out.println("Subchannel : " + subchannel);
+			if (subchannel.equals("PlayerList")) {
+				String server = in.readUTF();
+				System.out.println("Server : " + server);
+				String[] playerList = in.readUTF().split(", ");
+				if (server.equalsIgnoreCase("creative")) {
+					Lobby.get().getTabList().updateCreative(playerList);
+				}
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					Lobby.get().getTabList().send(p);
+				}
 			}
 		}
 	}
