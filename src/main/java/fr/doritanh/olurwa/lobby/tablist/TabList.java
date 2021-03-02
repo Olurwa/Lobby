@@ -80,7 +80,7 @@ public class TabList {
 	/**
 	 * Update the creative player list
 	 * 
-	 * @param playersNames
+	 * @param playersNames - List of player names
 	 */
 	public void updateCreative(String[] playersNames) {
 		this.sTab.updateCreative(playersNames);

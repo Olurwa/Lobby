@@ -13,7 +13,7 @@ public class MessageListener implements PluginMessageListener {
 
 	@Override
 	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-		if (!channel.equals("BungeeCord")) {
+		if (!channel.equals("BungeeCord") || !channel.equals("olurwa:core")) {
 			return;
 		}
 		ByteArrayDataInput in = ByteStreams.newDataInput(message);
