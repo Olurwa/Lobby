@@ -11,12 +11,10 @@ import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
 import fr.doritanh.olurwa.lobby.listener.BungeeMessageListener;
 import fr.doritanh.olurwa.lobby.listener.CoreMessageListener;
 import fr.doritanh.olurwa.lobby.listener.PlayerListener;
-import fr.doritanh.olurwa.lobby.tablist.TabList;
 
 public class Lobby extends JavaPlugin {
 	private World world;
 	private Location spawn;
-	private TabList tablist;
 
 	private static Lobby instance;
 
@@ -50,9 +48,6 @@ public class Lobby extends JavaPlugin {
 			}
 		}
 		this.spawn.add(0.5, 0, 0.5);
-
-		// Set class
-		this.tablist = new TabList();
 	}
 
 	@Override
@@ -74,9 +69,5 @@ public class Lobby extends JavaPlugin {
 
 	public Location getSpawn() {
 		return this.spawn;
-	}
-
-	public TabList getTabList() {
-		return this.tablist;
 	}
 }

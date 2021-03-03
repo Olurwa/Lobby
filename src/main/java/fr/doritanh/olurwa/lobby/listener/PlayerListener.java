@@ -1,6 +1,5 @@
 package fr.doritanh.olurwa.lobby.listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -21,7 +20,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.doritanh.olurwa.lobby.Lobby;
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
@@ -47,21 +45,6 @@ public class PlayerListener implements Listener {
 		e.setJoinMessage(null);
 		e.getPlayer().getInventory().clear();
 
-		Lobby.get().getTabList().sendHeaderFooter(e.getPlayer());
-		Lobby.get().getTabList().updateLobby();
-
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			Lobby.get().getTabList().send(p);
-		}
-
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				Lobby.get().getTabList().requestUpdateServers();
-
-			}
-		}.runTaskLater(Lobby.get(), 20);
-
 		this.sendMenu(e.getPlayer());
 	}
 
@@ -73,25 +56,6 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				Lobby.get().getTabList().updateLobby();
-
-			}
-		}.runTaskLater(Lobby.get(), 20);
-
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			Lobby.get().getTabList().send(p);
-		}
-
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				Lobby.get().getTabList().requestUpdateServers();
-
-			}
-		}.runTaskLater(Lobby.get(), 20);
 	}
 
 	/**
