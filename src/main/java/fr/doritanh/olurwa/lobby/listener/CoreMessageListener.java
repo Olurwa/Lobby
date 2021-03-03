@@ -13,17 +13,14 @@ public class CoreMessageListener implements PluginMessageListener {
 
 	@Override
 	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-		System.out.println("Arrive de " + channel);
 		if (!channel.equals("olurwa:core")) {
 			return;
 		}
 		ByteArrayDataInput in = ByteStreams.newDataInput(message);
 		String subchannel = in.readUTF();
-		System.out.println("Subchannel : " + subchannel);
 		if (subchannel.equals("PlayerList")) {
 			String server = in.readUTF();
 			String players = in.readUTF();
-			System.out.println("Server : " + server + " Players : " + players);
 			String[] playerList = players.split(", ");
 			if (server.equalsIgnoreCase("creative")) {
 				Lobby.get().getTabList().updateCreative(playerList);
