@@ -1,8 +1,6 @@
 package fr.doritanh.olurwa.lobby.listener;
 
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,21 +16,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.doritanh.olurwa.lobby.Lobby;
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
 
 public class PlayerListener implements Listener {
-
-	private void sendMenu(Player p) {
-		final ItemStack itemMenu = new ItemStack(Material.CLOCK, 1);
-		final ItemMeta meta = itemMenu.getItemMeta();
-		meta.setDisplayName("Lobby menu");
-		itemMenu.setItemMeta(meta);
-		p.getInventory().addItem(itemMenu);
-	}
 
 	/**
 	 * When player login
@@ -45,7 +33,7 @@ public class PlayerListener implements Listener {
 		e.setJoinMessage(null);
 		e.getPlayer().getInventory().clear();
 
-		this.sendMenu(e.getPlayer());
+		MenuInventory.sendMenu(e.getPlayer());
 	}
 
 	/**

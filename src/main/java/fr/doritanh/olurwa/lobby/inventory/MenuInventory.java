@@ -19,71 +19,99 @@ import fr.doritanh.olurwa.lobby.Lobby;
 
 public class MenuInventory implements Listener {
 	private String name;
-    private final Inventory i;
+	private final Inventory i;
 
-    public MenuInventory() {
-    	this.name = "Olurwa Menu";
-        this.i = Bukkit.createInventory(null, 9, this.name);        
+	public MenuInventory() {
+		this.name = "Olurwa Menu";
+		this.i = Bukkit.createInventory(null, 27, this.name);
 
-        //this.i.addItem(this.createItemStack(Material.GRASS_BLOCK, "Survie"));
-        this.i.addItem(this.createItemStack(Material.ANVIL, "Créatif"));
-    }
-    
-    private ItemStack createItemStack(Material m, String name) {
-        final ItemStack item = new ItemStack(m, 1);
-        final ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        item.setItemMeta(meta);
-        return item;
-    }
+		this.i.setItem(10, this.createItemStack(Material.ANVIL, "Créatif"));
+		this.i.setItem(11, this.createItemStack(Material.GRASS_BLOCK, "Survie"));
+	}
 
-    /**
-     * Open the menu GUI for a HUmanEntity
-     * @param ent
-     */
-    public void openInventory(final HumanEntity ent) {
-        ent.openInventory(this.i);
-    }
+	private ItemStack createItemStack(Material m, String name) {
+		final ItemStack item = new ItemStack(m, 1);
+		final ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(name);
+		item.setItemMeta(meta);
+		return item;
+	}
 
-    /**
-     * When the user open an inventory
-     * @param e
-     */
-    @EventHandler
-    public void onInventoryClick(final InventoryClickEvent e) {
-        if (!e.getView().getTitle().equalsIgnoreCase(this.name)) return;
+	/**
+	 * Open the menu GUI for a HUmanEntity
+	 * 
+	 * @param ent
+	 */
+	public void openInventory(final HumanEntity ent) {
+		ent.openInventory(this.i);
+	}
 
-        e.setCancelled(true);
-        final ItemStack clickedItem = e.getCurrentItem();
-        if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
+	/**
+	 * When the user open an inventory
+	 * 
+	 * @param e
+	 */
+	@EventHandler
+	public void onInventoryClick(final InventoryClickEvent e) {
+		if (!e.getView().getTitle().equalsIgnoreCase(this.name))
+			return;
 
-        final Player p = (Player) e.getWhoClicked();
-        switch (e.getRawSlot()) {
-        case 0:
-        	try {
-          	  ByteArrayDataOutput out = ByteStreams.newDataOutput();
-          	  out.writeUTF("Connect");
-          	  out.writeUTF("creative");
+		e.setCancelled(true);
+		final ItemStack clickedItem = e.getCurrentItem();
+		if (clickedItem == null || clickedItem.getType() == Material.AIR)
+			return;
 
-          	  p.sendPluginMessage(Lobby.get(), "BungeeCord", out.toByteArray());
-        	} catch (Exception error) {
-        		System.out.println("Something didn't work. Is BungeeCoord installed ?");
-        	}
-        	break;
-        default:
-            p.sendMessage("D�sol�, cette fonctionnalit� n'est pas disponible pour le moment. ");
-            break;
-        }
-    }
+		final Player p = (Player) e.getWhoClicked();
+		switch (e.getRawSlot()) {
+		case 10:
+			try {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+				out.writeUTF("Connect");
+				out.writeUTF("creative");
 
-    /**
-     * Cancel dragging
-     * @param e
-     */
-    @EventHandler
-    public void onInventoryClick(final InventoryDragEvent e) {
-        if (e.getInventory() == this.i) {
-          e.setCancelled(true);
-        }
-    }
+				p.sendPluginMessage(Lobby.get(), "BungeeCord", out.toByteArray());
+			} catch (Exception error) {
+				System.out.println("Le serveur créatif semble down.");
+				p.sendMessage("Le serveur créatif ne seùbme pas joignable.");
+				;
+			}
+			break;
+		case 11:
+			try {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+				out.writeUTF("Connect");
+				out.writeUTF("survival");
+
+				p.sendPluginMessage(Lobby.get(), "BungeeCord", out.toByteArray());
+			} catch (Exception error) {
+				System.out.println("Le serveur survival semble down.");
+				p.sendMessage("Le serveur créatif ne semble pas joignable.");
+				;
+			}
+			break;
+		default:
+			p.sendMessage("Désolé, cette fonctionnalité n'est pas disponible pour le moment. ");
+			break;
+		}
+	}
+
+	/**
+	 * Cancel dragging
+	 * 
+	 * @param e
+	 */
+	@EventHandler
+	public void onInventoryClick(final InventoryDragEvent e) {
+		if (e.getInventory() == this.i) {
+			e.setCancelled(true);
+		}
+	}
+
+	public static void sendMenu(Player p) {
+		final ItemStack itemMenu = new ItemStack(Material.CLOCK, 1);
+		final ItemMeta meta = itemMenu.getItemMeta();
+		meta.setDisplayName("Lobby menu");
+		itemMenu.setItemMeta(meta);
+		p.getInventory().addItem(itemMenu);
+	}
 }
