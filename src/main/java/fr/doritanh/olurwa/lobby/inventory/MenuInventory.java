@@ -16,6 +16,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
 import fr.doritanh.olurwa.lobby.Lobby;
+import net.kyori.adventure.text.Component;
 
 public class MenuInventory implements Listener {
 	private String name;
@@ -32,7 +33,8 @@ public class MenuInventory implements Listener {
 	private ItemStack createItemStack(Material m, String name) {
 		final ItemStack item = new ItemStack(m, 1);
 		final ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
+		// meta.setDisplayName(name);
+		meta.displayName(Component.text("Lobby menu"));
 		item.setItemMeta(meta);
 		return item;
 	}
