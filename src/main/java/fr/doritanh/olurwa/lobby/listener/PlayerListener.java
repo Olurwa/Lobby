@@ -30,7 +30,7 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent e) {
 		e.getPlayer().teleport(Lobby.get().getSpawn());
-		e.setJoinMessage(null);
+		e.joinMessage(null);
 		e.getPlayer().getInventory().clear();
 
 		MenuInventory.sendMenu(e.getPlayer());
@@ -43,7 +43,7 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
-		e.setQuitMessage(null);
+		e.quitMessage(null);
 	}
 
 	/**
@@ -54,7 +54,8 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if (e.getItem() != null && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("Lobby menu")) {
+			if (e.getItem() != null
+					&& e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(MenuInventory.name)) {
 				MenuInventory m = new MenuInventory();
 				m.openInventory(e.getPlayer());
 			}

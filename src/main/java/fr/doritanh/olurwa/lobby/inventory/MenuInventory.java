@@ -19,12 +19,11 @@ import fr.doritanh.olurwa.lobby.Lobby;
 import net.kyori.adventure.text.Component;
 
 public class MenuInventory implements Listener {
-	private String name;
+	public final static String name = "Lobby menu";
 	private final Inventory i;
 
 	public MenuInventory() {
-		this.name = "Olurwa Menu";
-		this.i = Bukkit.createInventory(null, 27, this.name);
+		this.i = Bukkit.createInventory(null, 27, Component.text(name));
 
 		this.i.setItem(10, this.createItemStack(Material.ANVIL, "Créatif"));
 		this.i.setItem(11, this.createItemStack(Material.GRASS_BLOCK, "Survie"));
@@ -33,8 +32,7 @@ public class MenuInventory implements Listener {
 	private ItemStack createItemStack(Material m, String name) {
 		final ItemStack item = new ItemStack(m, 1);
 		final ItemMeta meta = item.getItemMeta();
-		// meta.setDisplayName(name);
-		meta.displayName(Component.text("Lobby menu"));
+		meta.displayName(Component.text(name));
 		item.setItemMeta(meta);
 		return item;
 	}
@@ -55,7 +53,7 @@ public class MenuInventory implements Listener {
 	 */
 	@EventHandler
 	public void onInventoryClick(final InventoryClickEvent e) {
-		if (!e.getView().getTitle().equalsIgnoreCase(this.name))
+		if (!e.getView().getTitle().equalsIgnoreCase(name))
 			return;
 
 		e.setCancelled(true);
@@ -112,7 +110,7 @@ public class MenuInventory implements Listener {
 	public static void sendMenu(Player p) {
 		final ItemStack itemMenu = new ItemStack(Material.CLOCK, 1);
 		final ItemMeta meta = itemMenu.getItemMeta();
-		meta.setDisplayName("Lobby menu");
+		meta.displayName(Component.text(name));
 		itemMenu.setItemMeta(meta);
 		p.getInventory().addItem(itemMenu);
 	}
