@@ -4,7 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 import fr.doritanh.olurwa.lobby.commands.HelpCommand;
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
@@ -69,5 +73,13 @@ public class Lobby extends JavaPlugin {
 
 	public Location getSpawn() {
 		return this.spawn;
+	}
+
+	public void sendToServer(Player player, String serverName) {
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+		out.writeUTF("Connect");
+		out.writeUTF(serverName);
+
+		player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
 	}
 }

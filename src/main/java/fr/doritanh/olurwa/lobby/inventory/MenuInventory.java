@@ -1,5 +1,7 @@
 package fr.doritanh.olurwa.lobby.inventory;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -12,27 +14,58 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
 import fr.doritanh.olurwa.lobby.Lobby;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class MenuInventory implements Listener {
-	public final static String name = "Lobby menu";
+	public final static String name = "Menu";
 	private final Inventory i;
+	private final HashMap<String, Integer> invSlots;
 
 	public MenuInventory() {
 		this.i = Bukkit.createInventory(null, 27, Component.text(name));
+		this.invSlots = new HashMap<String, Integer>();
+		this.invSlots.put("creative", 11);
+		this.invSlots.put("survival", 13);
+		this.invSlots.put("frontier", 15);
 
-		this.i.setItem(10, this.createItemStack(Material.ANVIL, "Créatif"));
-		this.i.setItem(11, this.createItemStack(Material.GRASS_BLOCK, "Survie"));
+		this.i.setItem(this.invSlots.get("creative"), this.createCreativeStack());
+		this.i.setItem(this.invSlots.get("survival"), this.createSurvivalStack());
+		this.i.setItem(this.invSlots.get("frontier"), this.createFrontierStack());
 	}
 
-	private ItemStack createItemStack(Material m, String name) {
-		final ItemStack item = new ItemStack(m, 1);
+	private ItemStack createCreativeStack() {
+		final ItemStack item = new ItemStack(Material.CYAN_WOOL, 1);
 		final ItemMeta meta = item.getItemMeta();
-		meta.displayName(Component.text(name));
+
+		Component name = Component.text("Créatif").color(TextColor.color(66, 211, 221)).decorate(TextDecoration.BOLD);
+		meta.displayName(name);
+
+		item.setItemMeta(meta);
+		return item;
+	}
+
+	private ItemStack createSurvivalStack() {
+		final ItemStack item = new ItemStack(Material.NETHERITE_PICKAXE, 1);
+		final ItemMeta meta = item.getItemMeta();
+
+		Component name = Component.text("Survie").color(TextColor.color(70, 232, 64)).decorate(TextDecoration.BOLD);
+		meta.displayName(name);
+
+		item.setItemMeta(meta);
+		return item;
+	}
+
+	private ItemStack createFrontierStack() {
+		final ItemStack item = new ItemStack(Material.GOLD_INGOT, 1);
+		final ItemMeta meta = item.getItemMeta();
+
+		Component name = Component.text("Frontier").color(TextColor.color(239, 200, 71)).decorate(TextDecoration.BOLD);
+		meta.displayName(name);
+
 		item.setItemMeta(meta);
 		return item;
 	}
@@ -53,7 +86,8 @@ public class MenuInventory implements Listener {
 	 */
 	@EventHandler
 	public void onInventoryClick(final InventoryClickEvent e) {
-		if (!e.getView().getTitle().equalsIgnoreCase(name))
+		TextComponent title = (TextComponent) e.getView().title();
+		if (!title.content().equalsIgnoreCase(name))
 			return;
 
 		e.setCancelled(true);
@@ -62,36 +96,12 @@ public class MenuInventory implements Listener {
 			return;
 
 		final Player p = (Player) e.getWhoClicked();
-		switch (e.getRawSlot()) {
-		case 10:
-			try {
-				ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				out.writeUTF("Connect");
-				out.writeUTF("creative");
-
-				p.sendPluginMessage(Lobby.get(), "BungeeCord", out.toByteArray());
-			} catch (Exception error) {
-				System.out.println("Le serveur créatif semble down.");
-				p.sendMessage("Le serveur créatif ne seùbme pas joignable.");
-				;
-			}
-			break;
-		case 11:
-			try {
-				ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				out.writeUTF("Connect");
-				out.writeUTF("survival");
-
-				p.sendPluginMessage(Lobby.get(), "BungeeCord", out.toByteArray());
-			} catch (Exception error) {
-				System.out.println("Le serveur survival semble down.");
-				p.sendMessage("Le serveur créatif ne semble pas joignable.");
-				;
-			}
-			break;
-		default:
-			p.sendMessage("Désolé, cette fonctionnalité n'est pas disponible pour le moment. ");
-			break;
+		if (e.getRawSlot() == this.invSlots.get("creative")) {
+			Lobby.get().sendToServer(p, "creative");
+		} else if (e.getRawSlot() == this.invSlots.get("survival")) {
+			Lobby.get().sendToServer(p, "survival");
+		} else if (e.getRawSlot() == this.invSlots.get("frontier")) {
+			Lobby.get().sendToServer(p, "frontier");
 		}
 	}
 
@@ -102,7 +112,7 @@ public class MenuInventory implements Listener {
 	 */
 	@EventHandler
 	public void onInventoryClick(final InventoryDragEvent e) {
-		if (e.getInventory() == this.i) {
+		if (((TextComponent) e.getView().title()).content().equalsIgnoreCase(name)) {
 			e.setCancelled(true);
 		}
 	}

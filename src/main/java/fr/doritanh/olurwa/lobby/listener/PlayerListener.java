@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.doritanh.olurwa.lobby.Lobby;
 import fr.doritanh.olurwa.lobby.inventory.MenuInventory;
+import net.kyori.adventure.text.TextComponent;
 
 public class PlayerListener implements Listener {
 
@@ -54,8 +55,8 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if (e.getItem() != null
-					&& e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(MenuInventory.name)) {
+			if (e.getItem() != null && ((TextComponent) e.getItem().getItemMeta().displayName()).content()
+					.equalsIgnoreCase(MenuInventory.name)) {
 				MenuInventory m = new MenuInventory();
 				m.openInventory(e.getPlayer());
 			}
